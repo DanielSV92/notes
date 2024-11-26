@@ -1,6 +1,6 @@
-from smarty.app import create_app
-from smarty.extensions import db
-from smarty.settings import DevConfig
+from section.app import create_app
+from section.extensions import db
+from section.settings import DevConfig
 
 app = create_app(DevConfig())
 

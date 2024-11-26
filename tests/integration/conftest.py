@@ -10,35 +10,35 @@ from cryptography.hazmat.primitives import \
     serialization as crypto_serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 
-from smarty.app import create_app
-from smarty.domain.models import CapabilityList
-from smarty.domain.models import CategoryOccurrences
-from smarty.domain.models import CerebroSettings
-from smarty.domain.models import DataSource
-from smarty.domain.models import EnvFeatures
-from smarty.domain.models import Environment
-from smarty.domain.models import Fingerprint
-from smarty.domain.models import HelpdeskCategory
-from smarty.domain.models import HelpdeskSubCategory
-from smarty.domain.models import Incident
-from smarty.domain.models import IncidentEvent
-from smarty.domain.models import IncidentRule
-from smarty.domain.models import IncidentStateEvent
-from smarty.domain.models import IncidentType
-from smarty.domain.models import IncidenttypeHistory
-from smarty.domain.models import IncidentTypeLabelEvent
-from smarty.domain.models import IncidentTypeRefinementEvent
-from smarty.domain.models import IncidentTypeSeverityEvent
-from smarty.domain.models import LogCategory
-from smarty.domain.models import ProctorModel
-from smarty.domain.models import ProctorTrainingData
-from smarty.domain.models import Role
-from smarty.domain.models import RolesUsers
-from smarty.domain.models import Signature
-from smarty.domain.models import SlackIntegration
-from smarty.domain.models import User
-from smarty.extensions import db as _db
-from smarty.settings import TestConfig
+from section.app import create_app
+from section.domain.models import CapabilityList
+from section.domain.models import CategoryOccurrences
+from section.domain.models import CerebroSettings
+from section.domain.models import DataSource
+from section.domain.models import EnvFeatures
+from section.domain.models import Environment
+from section.domain.models import Fingerprint
+from section.domain.models import HelpdeskCategory
+from section.domain.models import HelpdeskSubCategory
+from section.domain.models import Incident
+from section.domain.models import IncidentEvent
+from section.domain.models import IncidentRule
+from section.domain.models import IncidentStateEvent
+from section.domain.models import IncidentType
+from section.domain.models import IncidenttypeHistory
+from section.domain.models import IncidentTypeLabelEvent
+from section.domain.models import IncidentTypeRefinementEvent
+from section.domain.models import IncidentTypeSeverityEvent
+from section.domain.models import LogCategory
+from section.domain.models import ProctorModel
+from section.domain.models import ProctorTrainingData
+from section.domain.models import Role
+from section.domain.models import RolesUsers
+from section.domain.models import Signature
+from section.domain.models import SlackIntegration
+from section.domain.models import User
+from section.extensions import db as _db
+from section.settings import TestConfig
 
 key = rsa.generate_private_key(backend=crypto_default_backend(),
                                public_exponent=65537,

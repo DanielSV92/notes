@@ -67,7 +67,7 @@ class SKTokenResponse(SKResponseBase):
         'incoming_webhook': {
             'channel': '#test_slack_path',
             'channel_id': 'IWASHERE',
-            'url': 'daniel.is.awersome.com'
+            'url': 'daniel.is.awesome.com'
         }
     }
 
@@ -79,7 +79,7 @@ class SlackWebhookResponse(SKResponseBase):
             'incoming_webhook': {
                 'channel': '#test_slack_path',
                 'channel_id': 'IWASHERE',
-                'url': 'daniel.is.awersome.com'
+                'url': 'daniel.is.awesome.com'
             },
             **self.kwargs
         } if self.valid else {

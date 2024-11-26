@@ -1,21 +1,5 @@
+import jwt
 import datetime
-import logging
-import re
-import requests
-
-from flask_mail import Mail
-from flask_mail import Message
-import smarty.errors as error
-
-from smarty.domain.models import AccountPicture
-from smarty.domain.models import CapabilityList
-from smarty.domain.models import DataSource
-from smarty.domain.models import DSShare
-from smarty.domain.models import Role
-from smarty.domain.models import user_datastore
-from smarty.extensions import db
-from smarty.settings import Config
-
 
 def user_to_dict(user):
     return {

@@ -4,8 +4,8 @@ import jwt
 from flask_security import Security
 from flask_security import SQLAlchemyUserDatastore
 from flask_security import UserMixin
-from smarty.domain.base import BaseModel
-from smarty.extensions import db
+from notes.domain.base import BaseModel
+from notes.extensions import db
 
 class User(BaseModel, UserMixin):
     __tablename__ = 'user'

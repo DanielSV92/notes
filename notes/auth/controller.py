@@ -10,7 +10,7 @@ from section.domain.models import User
 from section.domain.models import user_datastore
 from section.extensions import db
 
-def register(current_user, body: dict) -> dict:
+def register(body: dict) -> dict:
     email = body['email']
     password = hash_password(body['password'])
     first_name = body.get('first_name', None)
