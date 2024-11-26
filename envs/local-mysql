@@ -1,0 +1,21 @@
+set -a
+FLASK_DEBUG=1
+FLASK_APP=smarty/autoapp:app
+MYSQL_PORT=3307
+MYSQL_HOSTNAME=localhost:$MYSQL_PORT
+MYSQL_USERNAME=whatever
+MYSQL_PASSWORD=changeme
+SMARTY_DBNAME=smarty
+PROCTOR_HOSTNAME=localhost
+PROCTOR_PORT=5714
+SCHEDULER_HOSTNAME=localhost
+SCHEDULER_PORT=5715
+SOLVER_HOSTNAME=localhost
+SOLVER_PORT=5712
+SWIFT_HOSTNAME=localhost
+SWIFT_PORT=5713
+LOCATION=https://cerebro.spiderkube.io
+SK_AUTH_HOSTNAME=https://stage.spiderkube.io/spiderkube/v1/auth
+SOCKETIO_SERVER=http://0.0.0.0:5000
+BROKER_URL=localhost
+CEREBRO_MARKET_URL=http://localhost:5710

@@ -1,0 +1,24 @@
+set -a
+FLASK_DEBUG=1
+FLASK_APP=smarty/autoapp:app
+MYSQL_PORT=3306
+MYSQL_HOSTNAME=192.207.60.152:$MYSQL_PORT
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=A5fL8DfsAx45
+SMARTY_DBNAME=smarty
+PROCTOR_HOSTNAME=localhost
+PROCTOR_PORT=5714
+SCHEDULER_HOSTNAME=localhost
+SCHEDULER_PORT=5715
+SOLVER_HOSTNAME=localhost
+SOLVER_PORT=5712
+SWIFT_HOSTNAME=localhost
+SWIFT_PORT=5713
+LOCATION=https://sjc.hayei.com
+SK_AUTH_HOSTNAME=https://sjc.spiderkube.com/spiderkube/v1/auth
+SK_ADMIN_USER=spiderkube-admin@ormuco.com
+SK_ADMIN_PASS=2282b8f9e2af4c4a9de6
+SOCKETIO_SERVER=https://sjc.hayei.com/cerebro/v1/event/server
+BROKER_URL=localhost
+CEREBRO_MARKET_URL=https://stage.central.hayei.com
+DEOS_HOST=https://sjc.mydeos.com

@@ -1,0 +1,25 @@
+set -a
+FLASK_DEBUG=1
+FLASK_APP=smarty/autoapp:app
+MYSQL_PORT=3306
+MYSQL_HOSTNAME=185.156.20.236:$MYSQL_PORT
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=H6AwoH9d6FXm
+SMARTY_DBNAME=smarty
+PROCTOR_HOSTNAME=localhost
+PROCTOR_PORT=5714
+SCHEDULER_HOSTNAME=localhost
+SCHEDULER_PORT=5715
+SOLVER_HOSTNAME=localhost
+SOLVER_PORT=5712
+SWIFT_HOSTNAME=cerebro.spiderkube.io/swift
+SWIFT_PORT=443
+LOCATION=https://cerebro.spiderkube.io
+SK_AUTH_HOSTNAME=https://kef.spiderkube.com/spiderkube/v1/auth
+SK_ADMIN_USER=spiderkube-admin@ormuco.com
+SK_ADMIN_PASS=SNC2LvW6tCaDhmMfcoTy
+SOCKETIO_SERVER=https://cerebro.spiderkube.io/cerebro/v1/event/server
+BROKER_URL=localhost
+CEREBRO_MARKET_URL=https://central.hayei.com
+DEOS_HOST=https://acc.mydeos.com
+OPENAI_API_KEY=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

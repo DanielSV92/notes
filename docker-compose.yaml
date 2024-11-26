@@ -1,0 +1,49 @@
+version: "2.0"
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  postgres:
+    image: "postgres"
+    ports:
+      - "127.0.1.1:5432:5432"
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=notes
+    networks:
+      notes:
+        aliases:
+          - postgres
+    restart: always
+
+  notes:
+    build:
+      context: "./components/smarty"
+    image: "images.ormuco.com:5000/smarty:compose-build"
+    command: "make compose-up"
+    ports:
+      - "127.0.1.1:5711:5000"
+    depends_on:
+      - "postgres"
+    environment:
+      - POSTGRES_HOSTNAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=notes
+    networks:
+      notes:
+        aliases:
+          - notes
+    restart: always
+
+networks:
+  notes:
