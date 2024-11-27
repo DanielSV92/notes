@@ -8,7 +8,7 @@ services:
   postgres:
     image: "postgres"
     ports:
-      - "127.0.1.1:5432:5432"
+      - "127.0.1.1:5438:5432"
     logging:
       options:
         max-size: 10m
@@ -27,11 +27,10 @@ services:
 
   notes:
     build:
-      context: "./components/notes"
-    image: "notes_image"
-    command: "make compose-up"
+      context: "."
+    image: "danielsv0606/note:1"
     ports:
-      - "127.0.1.1:5711:5000"
+      - "127.0.1.1:5710:5000"
     depends_on:
       - "postgres"
     environment:

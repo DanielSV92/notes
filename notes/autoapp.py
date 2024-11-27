@@ -9,6 +9,3 @@ from notes.settings import ProdConfig
 CONFIG = DevConfig if get_debug_flag() else ProdConfig
 
 app = create_app(CONFIG())
-
-if __name__ == "__main__":
-    app.run()
