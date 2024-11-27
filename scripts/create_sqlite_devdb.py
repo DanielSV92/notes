@@ -1,6 +1,6 @@
-from section.app import create_app
-from section.extensions import db
-from section.settings import DevConfig
+from notes.app import create_app
+from notes.extensions import db
+from notes.settings import DevConfig
 
 app = create_app(DevConfig())
 

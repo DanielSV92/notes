@@ -67,14 +67,6 @@ This command will also take care of installing any required python
 packages, as well as setting up a virtual environment for you, to
 avoid conflicts with python packages used by other projects.
 
-An alternative to make which requires pipenv shell would be to run it with tox:
-
-.. code-block:: sh
-    tox or tox -e dev
-    ./local.sh
-
-local.sh runs smarty with sqlite mode
-
 
 Environment Set-up
 ^^^^^^^^^^^^^^^^^^
@@ -90,7 +82,7 @@ run the following:
 
 .. code-block:: sh
 
-   . envs/local-postgressql
+   .envs/local-postgressql
 
 Refer to the next section for details on each of those options.
 
@@ -127,7 +119,7 @@ it, we use schema migration scripts, which you can run like so:
 Running Notes
 ^^^^^^^^^^^^^^
 
-To run Smarty using Flask's built-in development server, you can run
+To run Notes using Flask's built-in development server, you can run
 the following:
 
 .. code-block:: sh
