@@ -1,13 +1,13 @@
 ======
-Smarty
+Notes
 ======
 
-Smarty is the incident management database for Cerebro.
+Notes is a user sign in and notes management project.
 
 Requirements
 ------------
 
-To start working on Smarty, you will need the following software:
+To start working on notes, you will need the following software:
 
 - Python ≥ 3.6
 - pip
@@ -17,7 +17,7 @@ To start working on Smarty, you will need the following software:
 Some extra depencies can be used to ease development and testing, but
 these are optional:
 
-- SQLite ≥ 3.0
+- PostgrestSQL or other SQL
 
 These can be installed as follows:
 
@@ -79,10 +79,9 @@ local.sh runs smarty with sqlite mode
 Environment Set-up
 ^^^^^^^^^^^^^^^^^^
 
-Smarty, like other Cerebro components, reads environment specific
-configuration through environment variables. To avoid having to
-constantly `export` such variables in your shell when developing, a
-set of environment definition files are provided under `envs/`. To use
+Notes reads environment specific configuration through environment variables.
+To avoid having to constantly `export` such variables in your shell when developing,
+a set of environment definition files are provided under `envs/`. To use
 one of them, use the `.` or `source` command of your shell.
 
 For instance, if you intend to develop against a local MySQL database
@@ -91,51 +90,31 @@ run the following:
 
 .. code-block:: sh
 
-   . envs/dev-mysql
-
-Here is the list of the available environment files:
-
-| File Name    | Use With    |
-| ------------ | ----------- |
-| dev-cerebrom | MySQL created by Cerebrom |
-| dev-mysql    | MySQL Docker Container    |
-| dev-sqlite   | File-backed SQLite        |
+   . envs/local-postgressql
 
 Refer to the next section for details on each of those options.
 
 Database Set-up
 ^^^^^^^^^^^^^^^
 
-SQLite
-~~~~~~
-
-For development and testing purposes, Smarty defaults to using a SQLite
-database. The default SQLite database location is `dev.db` at the root of the
-repository.
-
-When running tests, database tables are automatically created and torn down.
-However, for manual testing and development you will need to run a script that
-manually populates a local sqlite file-backed DB. To do so, run:
-
-.. code-block:: sh
-
-    . envs/dev-sqlite
-    pipenv run python scripts/create_sqlite_devdb.py
-
-You may need to `rm dev.db` to avoid unexpected results for the above script.
-
-MySQL
+PostgrestSQL
 ~~~~~
 
-If instead you want Smarty to connect to a MySQL database, you first
-need to have access to a running MySQL instance. The easiest way to do
-so is to use the provided utility script which will spawn a MySQL
+If instead you want Notes to connect to a PostgrestSQL database, you first
+need to have access to a running PostgrestSQL instance. The easiest way to do
+so is to use the provided utility script which will spawn a PostgrestSQL
 instance using Docker for you:
 
 .. code-block:: sh
 
-   . envs/dev-mysql
-   ./scripts/create_mysql_container.sh
+    source ./envs/local-posgressql
+    docker-compose up postgres -d --build
+
+To add the new database run the following command:
+
+.. code-block:: sh
+
+    pipenv run python  scripts/check_create_database.py
 
 At this point, the database will be devoid of any tables. To populate
 it, we use schema migration scripts, which you can run like so:
@@ -144,12 +123,8 @@ it, we use schema migration scripts, which you can run like so:
 
     pipenv run flask db upgrade
 
-Alternately, if you're running MySQL via the `cerebrom` multi-repo,
-you can use the `dev-cerebrom` environment file. The database should
-already be populated by `cerebrom`. Refer to that repository's
-documentation for more details.
 
-Running Smarty
+Running Notes
 ^^^^^^^^^^^^^^
 
 To run Smarty using Flask's built-in development server, you can run
@@ -162,7 +137,7 @@ the following:
 Generate SQLAlchemy Migration Scripts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Whenever you make changes to the models in `smarty.domain.models` you will need
+Whenever you make changes to the models in `notes.domain.models` you will need
 to run the following command:
 
 .. code-block:: sh

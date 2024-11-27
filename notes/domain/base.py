@@ -1,4 +1,4 @@
-from smarty.extensions import db
+from notes.extensions import db
 
 
 class BaseModel(db.Model):

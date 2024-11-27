@@ -1,13 +1,10 @@
 """Application configuration."""
 import os
 
-from nltk.corpus import stopwords
-
-
 class Config(object):
     """Base configuration."""
 
-    SECRET_KEY = os.environ.get('SMARTY_SECRET', 'secret-key')
+    SECRET_KEY = os.environ.get('NOTES_SECRET', 'secret-key')
     APP_DIR = os.path.abspath(os.path.dirname(__file__))  # This directory
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -26,10 +23,10 @@ class Config(object):
     def db_uri_fragments(self):
         db_uri_fragments = []
         for name in [
-                'MYSQL_USERNAME',
-                'MYSQL_PASSWORD',
-                'MYSQL_HOSTNAME',
-                'SMARTY_DBNAME',
+                'POSTGRES_USER',
+                'POSTGRES_PASSWORD',
+                'POSTGRES_HOSTNAME',
+                'POSTGRES_DB',
         ]:
             var = os.environ.get(name, None)
             db_uri_fragments.append((var, name))
@@ -62,8 +59,9 @@ class Config(object):
             else:
                 raise e
 
-        return "mysql+pymysql://{0}:{1}@{2}/{3}".format(
+        return "postgresql://{0}:{1}@{2}/{3}".format(
             *[e[0] for e in self.db_uri_fragments])
+    SQLALCHEMY_DATABASE_URI: str = set_sqlalchemy_database_uri
 
 class ProdConfig(Config):
     """Production configuration."""

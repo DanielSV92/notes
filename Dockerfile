@@ -1,6 +1,6 @@
 FROM python:3.7
 
-ARG home=/home/smarty
+ARG home=/home/notes
 
 RUN pip install pipenv==2020.6.2
 
@@ -9,15 +9,13 @@ USER ${user}
 
 COPY . /${home}
 USER root
-
-RUN ["/bin/bash", "-c","mkdir .ssh", "chmod 777 /home/smarty/.ssh"]
 USER ${user}
 
 RUN pipenv install
 
 EXPOSE 5000
 
-ENV FLASK_APP ${home}/smarty/autoapp.py
+ENV FLASK_APP ${home}/notes/autoapp.py
 CMD pipenv run python3 scripts/check_create_database.py && \
 	pipenv run flask db upgrade && \
 	pipenv run python3 scripts/init_roles_and_permissions.py && \

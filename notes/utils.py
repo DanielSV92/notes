@@ -1,9 +1,8 @@
 import datetime
 import flask
-import logging
 
 from functools import wraps
-import smarty.errors as error
+import notes.errors as error
 
 HEADERS = {'Content-Type': 'application/json'}
 
@@ -87,58 +86,3 @@ def epoch_micros_to_datetime(epoch_micros: int) -> datetime.datetime:
     date = datetime.datetime.fromtimestamp(epoch_micros / 1000000)
 
     return date
-
-
-def reformat_datetime(body) -> list:
-    start_date_epoch_millis = body.get('start_date', None)
-    start_date = None
-    if start_date_epoch_millis:
-        start_date_epoch_millis = int(start_date_epoch_millis)
-        if start_date_epoch_millis < 1500000000000:
-            start_date_epoch_millis = start_date_epoch_millis * 1000
-        start_date = epoch_millis_to_datetime(start_date_epoch_millis)
-
-    end_date_epoch_millis = body.get('end_date', None)
-    end_date = None
-    if end_date_epoch_millis:
-        end_date_epoch_millis = int(end_date_epoch_millis)
-        if end_date_epoch_millis < 1500000000000:
-            end_date_epoch_millis = end_date_epoch_millis * 1000
-        end_date = epoch_millis_to_datetime(end_date_epoch_millis)
-
-    date_epoch_millis = body.get('date', None)
-    date = None
-    if date_epoch_millis:
-        date_epoch_millis = int(date_epoch_millis)
-        if date_epoch_millis < 1500000000000:
-            date_epoch_millis = date_epoch_millis * 1000
-        date = epoch_millis_to_datetime(date_epoch_millis)
-        date = datetime.datetime(*date.timetuple()[:3])
-
-    return [start_date, end_date, date]
-
-
-def validate_datetime_format(body):
-    start_date_epoch_millis = body.get('start_date', None)
-    if start_date_epoch_millis:
-        try:
-            int(start_date_epoch_millis)
-        except ValueError:
-            raise error.BadRequest(
-                message='Parameter "start_date" must be an integer.')
-
-    end_date_epoch_millis = body.get('end_date', None)
-    if end_date_epoch_millis:
-        try:
-            int(end_date_epoch_millis)
-        except ValueError:
-            raise error.BadRequest(
-                message='Parameter "end_date" must be an integer.')
-
-    date_epoch_millis = body.get('date', None)
-    if date_epoch_millis:
-        try:
-            int(date_epoch_millis)
-        except ValueError:
-            raise error.BadRequest(
-                message='Parameter "date" must be an integer.')

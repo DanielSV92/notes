@@ -27,8 +27,8 @@ services:
 
   notes:
     build:
-      context: "./components/smarty"
-    image: "images.ormuco.com:5000/smarty:compose-build"
+      context: "./components/notes"
+    image: "notes_image"
     command: "make compose-up"
     ports:
       - "127.0.1.1:5711:5000"

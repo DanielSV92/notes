@@ -6,19 +6,7 @@ def user_to_dict(user):
         'id': user.id,
         'email': user.email,
         'first_name': user.first_name,
-        'last_name': user.last_name,
-        'active': user.active,
-    }
-
-
-def user_to_short_dict(user):
-    return {
-        'id': user.id,
-        'email': user.email,
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'phone_number': user.phone_number,
-        'active': user.active,
+        'last_name': user.last_name
     }
 
 
@@ -49,7 +37,7 @@ def decode_auth_token(auth_token):
     :return: integer|string
     """
     try:
-        payload = jwt.decode(auth_token, 'SECRET_KEY')
+        payload = jwt.decode(auth_token, 'SECRET_KEY', algorithms=['HS256'])
         return payload['sub']
     except jwt.ExpiredSignatureError:
         return 'Signature expired. Please log in again.'

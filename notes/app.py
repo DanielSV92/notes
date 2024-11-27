@@ -7,16 +7,14 @@ from flask import Flask
 from flask import Response
 from flask import make_response
 
-import section.errors as error
+import notes.errors as error
 
-from section import note
-from section import auth
-from section.domain.models import security
-from section.domain.models import user_datastore
-from section.extensions import db
-from section.extensions import ma
-from section.extensions import migrate
-from section.settings import ProdConfig
+from notes import note
+from notes import auth
+from notes.extensions import db
+from notes.extensions import ma
+from notes.extensions import migrate
+from notes.settings import ProdConfig
 
 
 def create_app(config_object=None):
@@ -27,10 +25,6 @@ def create_app(config_object=None):
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
     logger.addHandler(handler)
-
-    file_handler = logging.FileHandler(filename='section.log', mode='w')
-    file_handler.setFormatter(formatter)
-    logger.addHandler(file_handler)
 
     logging.getLogger().setLevel(logging.NOTSET)
 
@@ -82,7 +76,6 @@ def register_extensions(app):
     db.init_app(app)
     ma.init_app(app)
     migrate.init_app(app, db)
-    security.init_app(app, user_datastore)
 
 
 def register_blueprints(app):

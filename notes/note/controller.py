@@ -1,16 +1,16 @@
-import section.errors as error
+import notes.errors as error
 
-from section.note.utils import note_to_dict
-from section.domain.models import Notes
-from section.domain.models import NoteShare
-from section.domain.models import user_datastore
-from section.extensions import db
+from notes.note.utils import note_to_dict
+from notes.domain.models import Notes
+from notes.domain.models import NoteShare
+from notes.domain.models import User
+from notes.extensions import db
 
 def create_note(current_user, body):
     note_description = body.get('note_description')
 
     note = Notes(
-        owner_id=current_user.user_id,
+        owner_id=current_user.id,
         note_description=note_description)
     note.add()
     db.session.commit()
@@ -22,26 +22,41 @@ def create_note(current_user, body):
 
 def get_note(current_user, note_id):
     note = Notes.query.filter(
-        Notes.owner_id == current_user.user_id,
+        Notes.owner_id == current_user.id,
         Notes.note_id == note_id).first()
 
-    if note:
-        note = note_to_dict(note)
+    if not note:
+        raise error.NotFound('Note does not exist')
 
-    return note
+    return note_to_dict(note)
 
 
 def get_all_notes(current_user):
     notes_list = Notes.query.filter(
-        Notes.owner_id == current_user.user_id).all()
+        Notes.owner_id == current_user.id).all()
+    
+    reference_list = NoteShare.query.filter(
+        NoteShare.user_id == current_user.id
+    ).all()
+    shared_list = []
+    for item in reference_list:
+        shared_note = Notes.query.filter(
+            Notes.note_id == item['note_id']
+        ).first()
+        shared_list.append(shared_note)
 
-    return [note_to_dict(note) for note in notes_list]
+    body = {
+        'my_notes': [note_to_dict(note) for note in notes_list],
+        'shared_with_me': [note_to_dict(note) for note in shared_list]
+    }
+
+    return body
 
 
 def update_note(current_user, note_id, body):
     note = Notes.query.filter(
         Notes.note_id == note_id,
-        Notes.owner_id == current_user.user_id).first()
+        Notes.owner_id == current_user.id).first()
 
     if not note:
         raise error.NotFound(message='The note does not exist')
@@ -59,7 +74,7 @@ def update_note(current_user, note_id, body):
 
 def delete_note(current_user, note_id):
     note = Notes.query.filter(
-        Notes.owner_id == current_user.user_id,
+        Notes.owner_id == current_user.id,
         Notes.note_id == note_id).first()
 
     if not note:
@@ -71,14 +86,17 @@ def delete_note(current_user, note_id):
 
 
 def share_note(current_user, note_id, share_id):
-    user = user_datastore.get_user(share_id)
+    if share_id == current_user.id:
+        raise error.BadRequest('You can not share a note to yourself')
+
+    user = User.query.filter(User.id == share_id).first()
 
     if not user:
         raise error.BadRequest('Invalid user to share note')
 
     note = Notes.query.filter(
         Notes.note_id == note_id,
-        Notes.owner_id == current_user.user_id).first()
+        Notes.owner_id == current_user.id).first()
 
     if not note:
         raise error.NotFound(message='The note does not exist')
@@ -88,7 +106,7 @@ def share_note(current_user, note_id, share_id):
         user_id=share_id
     )
 
-    note.add()
+    share_note.add()
     db.session.commit()
 
     note = note_to_dict(note)
@@ -100,7 +118,22 @@ def share_note(current_user, note_id, share_id):
 def search_note(current_user, body):
     query = body.get('query')
     notes_list = Notes.query.filter(
-        Notes.owner_id == current_user.user_id,
+        Notes.owner_id == current_user.id,
         Notes.note_description.contains(query)).all()
 
-    return [note_to_dict(note) for note in notes_list]
+    reference_list = NoteShare.query.filter(
+        NoteShare.user_id == current_user.id).all()
+    
+    shared_list = []
+    for item in reference_list:
+        shared_note = Notes.query.filter(
+            Notes.note_id == item.note_id,
+            Notes.note_description.contains(query)).first()
+        shared_list.append(shared_note)
+
+    body = {
+        'my_notes': [note_to_dict(note) for note in notes_list],
+        'shared_with_me': [note_to_dict(note) for note in shared_list]
+    }
+
+    return body

@@ -1,4 +1,4 @@
-from smarty.extensions import ma
+from notes.extensions import ma
 
 
 class ContextSchema(ma.Schema):

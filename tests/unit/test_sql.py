@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from smarty.domain.sql import CurrentTimestampMicros
-from smarty.domain.sql import DateTimeMicros
+from notes.domain.sql import CurrentTimestampMicros
+from notes.domain.sql import DateTimeMicros
 
 
 class TestDateTimeMicros(TestCase):

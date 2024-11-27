@@ -57,14 +57,14 @@ def get_all_notes(current_user):
 @blueprint.route('/share_note/<note_id>/share/<share_id>',
                  methods=['POST'])
 @token_required
-def create_note(current_user, note_id, share_id):
+def share_note(current_user, note_id, share_id):
     note = controller.share_note(current_user, note_id, share_id)
     return jsonify(note)
 
 
 @blueprint.route('/search_notes', methods=['GET'])
 @token_required
-def get_all_notes(current_user):
+def search_notes(current_user):
     body = request.args.to_dict()
     note_list = controller.search_note(current_user, body)
     return jsonify(note_list)

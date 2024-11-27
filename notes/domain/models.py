@@ -1,25 +1,17 @@
 import datetime
 
 import jwt
-from flask_security import Security
-from flask_security import SQLAlchemyUserDatastore
-from flask_security import UserMixin
 from notes.domain.base import BaseModel
 from notes.extensions import db
 
-class User(BaseModel, UserMixin):
-    __tablename__ = 'user'
+class User(BaseModel):
+    __tablename__ = 'note_user'
 
     id = db.Column(db.String(511), primary_key=True, nullable=False)
     email = db.Column(db.String(255), unique=True)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
     password = db.Column(db.String(255))
-    last_login_at = db.Column(db.DateTime())
-    current_login_at = db.Column(db.DateTime())
-    last_login_ip = db.Column(db.String(100))
-    current_login_ip = db.Column(db.String(100))
-    login_count = db.Column(db.Integer)
 
     @staticmethod
     def encode_auth_token(user_id):
@@ -30,10 +22,10 @@ class User(BaseModel, UserMixin):
         try:
             payload = {
                 'exp':
-                datetime.datetime.utcnow() +
-                datetime.timedelta(days=0, seconds=3600),
+                datetime.datetime.now(tz=datetime.timezone.utc) +
+                datetime.timedelta(days=1, seconds=3600),
                 'iat':
-                datetime.datetime.utcnow(),
+                datetime.datetime.now(tz=datetime.timezone.utc),
                 'sub':
                 user_id,
             }
@@ -56,13 +48,14 @@ class User(BaseModel, UserMixin):
         except jwt.InvalidTokenError:
             return 'Invalid token. Please log in again.'
 
+
 class NoteShare(BaseModel):
     __tablename__ = 'note_share'
 
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
     note_id = db.Column('source_id', db.Integer(),
                           db.ForeignKey('notes.note_id', ondelete="CASCADE"))
-    user_id = db.Column(db.ForeignKey('user.id', ondelete="CASCADE"),
+    user_id = db.Column(db.ForeignKey('note_user.id', ondelete="CASCADE"),
                         nullable=False)
 
 class Notes(BaseModel):
@@ -70,12 +63,6 @@ class Notes(BaseModel):
 
     note_id: int = db.Column(
             db.Integer, primary_key=True, autoincrement=True)
-    owner_id = db.Column(db.ForeignKey('user.id', ondelete="CASCADE"),
+    owner_id = db.Column(db.ForeignKey('note_user.id', ondelete="CASCADE"),
                         nullable=False)
     note_description: str = db.Column(db.String(512), nullable=False)
-
-
-
-# Setup Flask-Security
-user_datastore = SQLAlchemyUserDatastore(db, User)
-security = Security(datastore=user_datastore)
