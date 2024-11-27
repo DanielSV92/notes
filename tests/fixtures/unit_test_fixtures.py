@@ -83,11 +83,3 @@ shared_list = [
 shared_note = L('note_share')
 shared_note.note_id = note2.note_id
 shared_note.user_id = user2.id
-
-
-datetime_datetime = datetime.datetime.fromtimestamp(1514764800)
-epoch_millis = 1514764800000
-epoch_millis2 = 1535977247112
-epoch_micros = 1514764800000000
-end_date = 1557939668245
-end_date2 = datetime.datetime.fromtimestamp(1514833200)

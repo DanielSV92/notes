@@ -41,7 +41,7 @@ def get_all_notes(current_user):
     shared_list = []
     for item in reference_list:
         shared_note = Notes.query.filter(
-            Notes.note_id == item['note_id']
+            Notes.note_id == item.note_id
         ).first()
         shared_list.append(shared_note)
 

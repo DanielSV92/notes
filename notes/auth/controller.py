@@ -48,10 +48,10 @@ def login(body: dict):
     ).first()
 
     if not user:
-        raise error.NotFound(message='Incorrect use or password')
+        raise error.Unauthorized(message='There is an account with this user')
     
     if password != base64.b64decode(user.password.encode('ascii')).decode('ascii'):
-        raise error.Unauthorized(message='Incorrect something or password')
+        raise error.Unauthorized(message='Incorrect user or password')
 
     user = User.query.filter(User.id == user.id).first()
     user_dict = utils.user_to_dict(user)

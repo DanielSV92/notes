@@ -87,6 +87,7 @@ class TestConfig(Config):
     DEBUG = True
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Bcrypt algorithm hashing rounds (reduced for testing purposes only!)
     BCRYPT_LOG_ROUNDS = 4
