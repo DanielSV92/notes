@@ -1,4 +1,5 @@
 import logging
+from ratelimit import limits
 from functools import wraps
 from flask import Blueprint
 from flask import jsonify
@@ -42,6 +43,7 @@ def token_required(f):
 
 
 @blueprint.route('/sign_up', methods=['POST'])
+@limits(calls=15, period=900)
 def register():
     body = request.get_json()
     user = controller.register(body=body)
@@ -50,6 +52,7 @@ def register():
 
 
 @blueprint.route('/login', methods=['POST'])
+@limits(calls=10, period=900)
 def login():
     body = request.get_json()
     response = controller.login(body=body)

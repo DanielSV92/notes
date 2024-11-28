@@ -19,14 +19,19 @@ class Config(object):
     SECURITY_PASSWORD_SALT = 'something_super_secret_change_in_production'
     SECURITY_TOKEN_MAX_AGE = 3600
 
+    POSTGRES_USER = os.environ.get('POSTGRES_USER', None)
+    POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', None)
+    POSTGRES_HOSTNAME = os.environ.get('POSTGRES_HOSTNAME', None)
+    POSTGRES_DB = os.environ.get('POSTGRES_DB', None)
+
     @property
     def db_uri_fragments(self):
         db_uri_fragments = []
         for name in [
-                'POSTGRES_USER',
-                'POSTGRES_PASSWORD',
-                'POSTGRES_HOSTNAME',
-                'POSTGRES_DB',
+            POSTGRES_USER,
+            POSTGRES_PASSWORD,
+            POSTGRES_HOSTNAME,
+            POSTGRES_DB,
         ]:
             var = os.environ.get(name, None)
             db_uri_fragments.append((var, name))
@@ -59,7 +64,7 @@ class Config(object):
             else:
                 raise e
 
-        return "postgresql://{0}:{1}@{2}/{3}".format(
+        return "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(
             *[e[0] for e in self.db_uri_fragments])
     SQLALCHEMY_DATABASE_URI: str = set_sqlalchemy_database_uri
 

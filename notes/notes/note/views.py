@@ -1,3 +1,4 @@
+from ratelimit import limits
 from flask import Blueprint
 from flask import Response
 from flask import jsonify
@@ -11,6 +12,7 @@ blueprint = Blueprint('note', __name__, url_prefix='/note')
 
 @blueprint.route('/create_note',
                  methods=['POST'])
+@limits(calls=15, period=900)
 @token_required
 def create_note(current_user):
     body = request.get_json()
@@ -20,6 +22,7 @@ def create_note(current_user):
 
 @blueprint.route('/update_note/<note_id>',
                  methods=['PATCH'])
+@limits(calls=15, period=900)
 @token_required
 def update_note(current_user, note_id):
     body = request.get_json()
@@ -29,6 +32,7 @@ def update_note(current_user, note_id):
 
 @blueprint.route('/delete_note/<note_id>',
                  methods=['DELETE'])
+@limits(calls=15, period=900)
 @token_required
 def delete_note(current_user, note_id):
     controller.delete_note(current_user, note_id)
@@ -41,6 +45,7 @@ def delete_note(current_user, note_id):
 
 @blueprint.route('/get_note/<note_id>',
                  methods=['GET'])
+@limits(calls=15, period=900)
 @token_required
 def get_note(current_user, note_id):
     note = controller.get_note(current_user, note_id)
@@ -48,6 +53,7 @@ def get_note(current_user, note_id):
 
 
 @blueprint.route('/get_notes', methods=['GET'])
+@limits(calls=15, period=900)
 @token_required
 def get_all_notes(current_user):
     note_list = controller.get_all_notes(current_user)
@@ -56,6 +62,7 @@ def get_all_notes(current_user):
 
 @blueprint.route('/share_note/<note_id>/share/<share_id>',
                  methods=['POST'])
+@limits(calls=15, period=900)
 @token_required
 def share_note(current_user, note_id, share_id):
     note = controller.share_note(current_user, note_id, share_id)
@@ -63,6 +70,7 @@ def share_note(current_user, note_id, share_id):
 
 
 @blueprint.route('/search_notes', methods=['GET'])
+@limits(calls=15, period=900)
 @token_required
 def search_notes(current_user):
     body = request.args.to_dict()
