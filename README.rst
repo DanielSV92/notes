@@ -2,7 +2,16 @@
 Notes
 ======
 
-Notes is a user sign in and notes management project.
+Notes is a user sign in and notes management project, that I created 
+using flask framework and a postgres database. The main reason of my 
+choosing for this framwork is due to the amount of support it has in
+labraries and other tools that can help with deployment. The database
+was something a little new to me I have more experience with mysql but
+still I felt it was a good opportunities to learn more, also postgres has
+many commom thing and improvements compared to mysql. Lastly, to debug all
+my code I used postmand which is really beneficial to keep all my API calls
+and reuse them, Render to host my database and deployment and Visual Studio
+for error checking. 
 
 Requirements
 ------------
@@ -17,7 +26,7 @@ To start working on notes, you will need the following software:
 Some extra depencies can be used to ease development and testing, but
 these are optional:
 
-- PostgrestSQL or other SQL
+- PostgresSQL or other SQL
 
 These can be installed as follows:
 
@@ -78,7 +87,7 @@ To avoid having to constantly `export` such variables in your shell when develop
 a set of environment definition files are provided under `envs/`. To use
 one of them, use the `.` or `source` command of your shell.
 
-For instance, if you intend to develop against a local MySQL database
+For instance, if you intend to develop against a local PostgresSQL database
 in a docker container (see PostgresSQL section below for details), you would
 run the following:
 
@@ -94,9 +103,9 @@ Database Set-up
 PostgresSQL
 ~~~~~
 
-If instead you want Notes to connect to a PostgrestSQL database, you first
-need to have access to a running PostgrestSQL instance. The easiest way to do
-so is to use the provided utility script which will spawn a PostgrestSQL
+If instead you want Notes to connect to a PostgresSQL database, you first
+need to have access to a running PostgresSQL instance. The easiest way to do
+so is to use the provided utility script which will spawn a PostgresSQL
 instance using Docker for you:
 
 .. code-block:: sh
@@ -139,8 +148,8 @@ to run the following command:
     pipenv run flask db migrate
 
 Note that it the migration scripts are not currently compatible with SQLite, so
-you will need to run this after setting up a MySQL database as mentioned in the
-earlier MySQL specific section on database setup.
+you will need to run this after setting up a PostgresSQL database as mentioned in the
+earlier PostgresSQL specific section on database setup.
 
 In addition to automatically generating migration scripts in this way it may
 also be necessary for you to tweak the generated scripts to accomodate
