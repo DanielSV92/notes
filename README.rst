@@ -101,8 +101,8 @@ instance using Docker for you:
 
 .. code-block:: sh
 
-    source ./envs/local-posgressql
-    docker-compose up postgres -d --build
+    source ./envs/local-psql
+    docker-compose up postgresql -d --build
 
 To add the new database run the following command:
 
