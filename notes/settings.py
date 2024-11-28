@@ -19,19 +19,14 @@ class Config(object):
     SECURITY_PASSWORD_SALT = 'something_super_secret_change_in_production'
     SECURITY_TOKEN_MAX_AGE = 3600
 
-
     @property
     def db_uri_fragments(self):
-        POSTGRES_USER = os.environ.get('POSTGRES_USER', None)
-        POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', None)
-        POSTGRES_HOSTNAME = os.environ.get('POSTGRES_HOSTNAME', None)
-        POSTGRES_DB = os.environ.get('POSTGRES_DB', None)
         db_uri_fragments = []
         for name in [
-            POSTGRES_USER,
-            POSTGRES_PASSWORD,
-            POSTGRES_HOSTNAME,
-            POSTGRES_DB,
+            'POSTGRES_USER',
+            'POSTGRES_PASSWORD',
+            'POSTGRES_HOSTNAME',
+            'POSTGRES_DB',
         ]:
             var = os.environ.get(name, None)
             db_uri_fragments.append((var, name))
