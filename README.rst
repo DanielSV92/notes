@@ -2,7 +2,8 @@
 Notes
 ======
 
-Notes is a user sign in and notes management project, that I created 
+Notes is a user sign in and notes management project, I based my project
+in a MVC architeture and is the one I used for production, that I created 
 using flask framework and a postgres database. The main reason of my 
 choosing for this framwork is due to the amount of support it has in
 labraries and other tools that can help with deployment. The database
