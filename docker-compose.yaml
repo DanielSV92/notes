@@ -1,48 +1,58 @@
-version: "2.0"
+version: "3.0"
 
-volumes:
-  postgres_data:
-    driver: local
+# USING RENDER DB
+# volumes:
+#   # postgres_data:
+#   #   driver: local
+#   # mysql_data:
+#   #   driver: local
 
 services:
-  postgres:
-    image: "postgres"
-    ports:
-      - "127.0.1.1:5438:5432"
-    logging:
-      options:
-        max-size: 10m
-        max-file: "3"
-    volumes:
-      - 'postgres_data:/var/lib/postgresql/data'
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=notes
-    networks:
-      notes:
-        aliases:
-          - postgres
-    restart: always
-
+  # postgresql:
+  #   image: "postgres:15.10"
+  #   ports:
+  #     - "127.0.1.1:5438:5432"
+  #   logging:
+  #     options:
+  #       max-size: 10m
+  #       max-file: "3"
+  #   volumes:
+  #     - 'postgres_data:/var/lib/postgresql/data'
+  #   healthcheck:      
+  #       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} -t 1"]
+  #       interval: 10s
+  #       timeout: 10s
+  #       retries: 10
+  #       start_period: 10s
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=notes
+  #   networks:
+  #     notes_net:
+  #       aliases:
+  #         - postgresql
+  #   restart: always
   notes:
     build:
-      context: "."
+      context: "./notes"
     image: "danielsv0606/note:1"
     ports:
-      - "127.0.1.1:5710:5000"
-    depends_on:
-      - "postgres"
+      - "5710:5000"
+    # depends_on:
+    #   - 'mysql'
+    #     # postgresql:
+    #     #   condition: service_healthy    
     environment:
-      - POSTGRES_HOSTNAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=notes
+      - POSTGRES_HOSTNAME=dpg-ct3s6ut6l47c73f4h45g-a.oregon-postgres.render.com
+      - POSTGRES_USER=notes_db_user
+      - POSTGRES_PASSWORD=kT7KD42fMvnKyGCNNcFbZPmT7WPOuW2R
+      - POSTGRES_DB=notes_database_gorn
     networks:
-      notes:
+      notes_net:
         aliases:
           - notes
     restart: always
 
 networks:
-  notes:
+  notes_net:

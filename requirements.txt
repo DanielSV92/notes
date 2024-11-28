@@ -1,5 +1,14 @@
+sphinx
+sphinx-rtd-theme
 flask
+ujson
+flask_security
+flask_mail
+nltk
 sqlalchemy
+email_validator
 flask_marshmallow
 flask_migrate
 python-dateutil
+XlsxWriter
+langdetect

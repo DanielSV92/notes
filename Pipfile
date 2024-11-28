@@ -41,6 +41,7 @@ ujson = "*"
 Werkzeug = "*"
 sqlalchemy = "*"
 psycopg2-binary = "*"
+ratelimit = "*"
 
 [dev-packages]
 yapf = "==0.31.0"
