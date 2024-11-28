@@ -61,7 +61,9 @@ succeed:
 
 .. code-block:: sh
 
-    make
+    pipenv run pytest --cov=notes tests/unit
+    pipenv run pytest --cov=notes tests/integration
+
 
 This command will also take care of installing any required python
 packages, as well as setting up a virtual environment for you, to
@@ -77,19 +79,19 @@ a set of environment definition files are provided under `envs/`. To use
 one of them, use the `.` or `source` command of your shell.
 
 For instance, if you intend to develop against a local MySQL database
-in a docker container (see MySQL section below for details), you would
+in a docker container (see PostgresSQL section below for details), you would
 run the following:
 
 .. code-block:: sh
 
-   .envs/local-postgressql
+   .envs/local-psql
 
 Refer to the next section for details on each of those options.
 
 Database Set-up
 ^^^^^^^^^^^^^^^
 
-PostgrestSQL
+PostgresSQL
 ~~~~~
 
 If instead you want Notes to connect to a PostgrestSQL database, you first
