@@ -35,7 +35,7 @@ services:
   #   restart: always
   notes:
     build:
-      context: "./notes"
+      context: "."
     image: "danielsv0606/note:1"
     ports:
       - "5710:5000"
